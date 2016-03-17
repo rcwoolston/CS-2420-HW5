@@ -37,8 +37,11 @@ class HashTableS // separate chaining
 													  // assume both zip codes are valid ones.
 		int CountTableEntry(int i); // return the number of elements in the ith slot of the hash table
 		void PrintTableEntry(int i); // print the element in the hash table
+		void PrintTableEntry();
+		double ALinkedListLength();
 
 	private:
 		Element * FindElement(int index, string x);
-		double HypotenousDistance(double x1, double y1, double x2, double y2);
+		double Haversine(double x1, double y1, double x2, double y2);
+		double AverageLinkedListLength();
 };

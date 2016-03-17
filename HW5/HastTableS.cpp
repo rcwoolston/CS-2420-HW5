@@ -1,6 +1,7 @@
 #include "HashTableS.h"
 #include <string>
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -132,7 +133,7 @@ double HashTableS::ComputeDistance(string x1, string x2) {
 		return NULL;
 	}
 	else {
-		return HypotenousDistance(elementOne->x, elementOne->y, elementTwo->x, elementTwo->y);
+		return abs(Haversine(elementOne->x, elementOne->y, elementTwo->x, elementTwo->y));
 	}
 }
 
@@ -151,6 +152,42 @@ Element * HashTableS::FindElement(int index, string x) {
 	return NULL;
 }
 
-double HashTableS::HypotenousDistance(double x1, double y1, double x2, double y2) {
-	return RADIUS_MILES * (2 * asin(sqrt((sin((x2 - x1) / 2)*sin((x2 - x1) / 2)) - cos(x1)*cos(x2)*((sin((y2 - y1) / 2)*sin((y2 - y1) / 2))))));
+double HashTableS::Haversine(double x1, double y1, double x2, double y2) {
+	double pi = 3.1415926535897;
+	return (RADIUS_MILES * 2 * asin(sqrt(pow(sin((x2*(pi/ 180) - x1*(pi / 180)) / 2.0), 2.0) + cos(x1*(pi / 180))*cos(x2*(pi / 180))*pow(sin((y2*(pi / 180) - y1*(pi / 180)) / 2.0), 2.0))));
+}
+
+double HashTableS::AverageLinkedListLength() {
+	//start at the first posiiton of the dictionary
+	int i = 0;
+	int length = 0, lengthTotal = 0;
+	
+	while (i < m) {
+		length = 0;
+		if (T[i] != NULL) {
+			Element *here = T[i];
+			while (here != NULL) {
+				length++;
+				here = here->next;
+			}
+		}
+		lengthTotal += length;
+		i++;
+	}
+	return lengthTotal / m;
+}
+
+double HashTableS::ALinkedListLength() {
+	return AverageLinkedListLength();
+}
+
+
+void HashTableS::PrintTableEntry() {
+	int here = 0;
+	while (here < m) {
+		if (T[here] != NULL) {
+			PrintTableEntry(here);
+		}
+		here++;
+	}
 }
